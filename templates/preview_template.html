@@ -3,172 +3,212 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Preview - Organizational Spotlight</title>
+    <title>Preview - Bristol Myers Squibb Organizational Spotlight</title>
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            line-height: 1.6;
-            color: #333333;
-            background-color: #f8f9fa;
-            margin: 0;
-            padding: 20px;
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4e8ec 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
         }
-        .preview-container {
-            max-width: 700px;
+
+        .container {
+            max-width: 1000px;
             margin: 0 auto;
-            background-color: #ffffff;
-            border-radius: 8px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .header h1 {
+            color: #BE2BBB;
+            font-size: 2rem;
+            margin-bottom: 5px;
+        }
+
+        .header p {
+            color: #666;
+            font-size: 1rem;
+        }
+
+        .spotlight-card {
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 10px 40px rgba(190, 43, 187, 0.1);
             overflow: hidden;
         }
-        .preview-header {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: #ffffff;
-            padding: 30px;
-            text-align: center;
-        }
-        .preview-header h1 {
-            margin: 0 0 10px 0;
-            font-size: 28px;
-            font-weight: 600;
-        }
-        .preview-content {
-            padding: 30px;
-        }
-        .spotlight-title {
-            font-size: 24px;
-            font-weight: 600;
-            color: #2c3e50;
-            margin: 0 0 15px 0;
-            padding-bottom: 10px;
-            border-bottom: 2px solid #667eea;
-        }
-        .meta-info {
+
+        .card-header {
+            background: linear-gradient(135deg, #BE2BBB 0%, #9a1f99 100%);
+            color: white;
+            padding: 25px 30px;
             display: flex;
-            flex-wrap: wrap;
-            gap: 15px;
-            margin-bottom: 20px;
-            padding: 15px;
-            background-color: #f8f9fa;
-            border-radius: 6px;
-        }
-        .meta-item {
-            font-size: 14px;
-            color: #555;
-        }
-        .meta-item strong {
-            color: #333;
-        }
-        .category-badge {
-            display: inline-block;
-            background-color: #667eea;
-            color: #ffffff;
-            padding: 5px 15px;
-            border-radius: 15px;
-            font-size: 13px;
-            font-weight: 600;
-        }
-        .tag {
-            display: inline-block;
-            background-color: #e8eaf6;
-            color: #5c6bc0;
-            padding: 4px 12px;
-            border-radius: 12px;
-            font-size: 12px;
-            margin-right: 6px;
-            margin-top: 6px;
-        }
-        .section {
-            margin: 25px 0;
-        }
-        .section-title {
-            font-size: 16px;
-            font-weight: 600;
-            color: #34495e;
-            margin: 0 0 12px 0;
-            display: flex;
+            justify-content: space-between;
             align-items: center;
         }
+
+        .card-header-left {
+            flex: 1;
+        }
+
+        .card-header h2 {
+            font-size: 1.5rem;
+            margin-bottom: 5px;
+        }
+
+        .card-header .subtitle {
+            opacity: 0.9;
+            font-size: 0.95rem;
+        }
+
+        .category-tag {
+            background: rgba(255, 255, 255, 0.2);
+            border: 2px solid white;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            text-align: center;
+            white-space: nowrap;
+            backdrop-filter: blur(5px);
+        }
+
+        .card-body {
+            padding: 30px;
+        }
+
+        .section {
+            margin-bottom: 25px;
+        }
+
+        .section:last-child {
+            margin-bottom: 0;
+        }
+
+        .section-title {
+            color: #BE2BBB;
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
         .section-title::before {
             content: '';
-            display: inline-block;
             width: 4px;
-            height: 18px;
-            background-color: #667eea;
-            margin-right: 10px;
+            height: 20px;
+            background: #BE2BBB;
+            border-radius: 2px;
         }
+
         .section-content {
-            color: #555555;
-            line-height: 1.8;
+            color: #444;
+            line-height: 1.7;
             white-space: pre-wrap;
         }
-        .tags-section {
-            margin-top: 20px;
-            padding-top: 20px;
-            border-top: 1px solid #e0e0e0;
+
+        .contributors-list {
+            color: #444;
+            line-height: 1.7;
+        }
+
+        .team-tag {
+            background: #BE2BBB;
+            color: white;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            display: inline-block;
+            margin: 3px;
+        }
+
+        @media (max-width: 768px) {
+            .card-header {
+                flex-direction: column;
+                gap: 15px;
+                align-items: flex-start;
+            }
+
+            .category-tag {
+                align-self: flex-end;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="preview-container">
-        <div class="preview-header">
+    <div class="container">
+        <div class="header">
             <h1>Preview Your Spotlight</h1>
-            <p style="margin: 0; opacity: 0.95;">This is how your submission will appear in the publication</p>
+            <p>This is how your submission will appear in the publication</p>
         </div>
 
-        <div class="preview-content">
-            <h2 class="spotlight-title">{{ title }}</h2>
-
-            <div class="meta-info">
-                <div class="meta-item">
-                    <strong>Project:</strong> {{ project_name }}
+        <div class="spotlight-card">
+            <div class="card-header">
+                <div class="card-header-left">
+                    <h2>{{ title }}</h2>
+                    <div class="subtitle">{{ project_name }}</div>
                 </div>
                 {% if category %}
-                <div class="meta-item">
-                    <span class="category-badge">{{ category }}</span>
+                <div class="category-tag">{{ category }}</div>
+                {% endif %}
+            </div>
+            <div class="card-body">
+                {% if description %}
+                <div class="section">
+                    <div class="section-title">Overview</div>
+                    <div class="section-content">{{ description }}</div>
                 </div>
                 {% endif %}
+
+                {% if key_achievements %}
+                <div class="section">
+                    <div class="section-title">Key Achievements</div>
+                    <div class="section-content">{{ key_achievements }}</div>
+                </div>
+                {% endif %}
+
+                {% if impact %}
+                <div class="section">
+                    <div class="section-title">Impact & Results</div>
+                    <div class="section-content">{{ impact }}</div>
+                </div>
+                {% endif %}
+
                 {% if team_members %}
-                <div class="meta-item" style="flex-basis: 100%;">
-                    <strong>Team:</strong> {{ team_members }}
+                <div class="section">
+                    <div class="section-title">Team Contributors</div>
+                    <div class="contributors-list">{{ team_members }}</div>
+                </div>
+                {% endif %}
+
+                {% if tags %}
+                <div class="section">
+                    <div class="section-title">Tags</div>
+                    <div>
+                        {% if tags is string %}
+                            {% for tag in tags.split(',') %}
+                            <span class="team-tag">{{ tag.strip() }}</span>
+                            {% endfor %}
+                        {% else %}
+                            {% for tag in tags %}
+                            <span class="team-tag">{{ tag }}</span>
+                            {% endfor %}
+                        {% endif %}
+                    </div>
                 </div>
                 {% endif %}
             </div>
-
-            {% if description %}
-            <div class="section">
-                <div class="section-title">Overview</div>
-                <div class="section-content">{{ description }}</div>
-            </div>
-            {% endif %}
-
-            {% if key_achievements %}
-            <div class="section">
-                <div class="section-title">Key Achievements</div>
-                <div class="section-content">{{ key_achievements }}</div>
-            </div>
-            {% endif %}
-
-            {% if impact %}
-            <div class="section">
-                <div class="section-title">Impact & Results</div>
-                <div class="section-content">{{ impact }}</div>
-            </div>
-            {% endif %}
-
-            {% if tags %}
-            <div class="tags-section">
-                {% if tags is string %}
-                    {% for tag in tags.split(',') %}
-                    <span class="tag">{{ tag.strip() }}</span>
-                    {% endfor %}
-                {% else %}
-                    {% for tag in tags %}
-                    <span class="tag">{{ tag }}</span>
-                    {% endfor %}
-                {% endif %}
-            </div>
-            {% endif %}
         </div>
     </div>
 </body>

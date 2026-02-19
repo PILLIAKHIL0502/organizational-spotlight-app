@@ -3,259 +3,253 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ publication_name }} - Organizational Spotlight</title>
+    <title>{{ publication_name }} - Bristol Myers Squibb Organizational Spotlight</title>
     <style>
-        /* Inline CSS for maximum email client compatibility */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            line-height: 1.6;
-            color: #333333;
-            background-color: #f4f4f4;
-            margin: 0;
-            padding: 0;
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4e8ec 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
         }
+
         .container {
-            max-width: 800px;
+            max-width: 1200px;
             margin: 0 auto;
-            background-color: #ffffff;
-            padding: 0;
         }
+
         .header {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: #ffffff;
-            padding: 40px 30px;
             text-align: center;
+            margin-bottom: 50px;
         }
+
         .header h1 {
-            margin: 0;
-            font-size: 32px;
-            font-weight: 600;
+            color: #BE2BBB;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
         }
+
         .header p {
-            margin: 10px 0 0 0;
-            font-size: 18px;
-            opacity: 0.95;
+            color: #666;
+            font-size: 1.1rem;
         }
-        .content {
-            padding: 30px;
-        }
-        .intro {
-            background-color: #f8f9fa;
-            padding: 20px;
-            border-left: 4px solid #667eea;
+
+        .spotlight-card {
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 10px 40px rgba(190, 43, 187, 0.1);
             margin-bottom: 30px;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
-        .spotlight-item {
-            background-color: #ffffff;
-            border: 1px solid #e0e0e0;
-            border-radius: 8px;
-            padding: 25px;
-            margin-bottom: 30px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+
+        .spotlight-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 50px rgba(190, 43, 187, 0.2);
         }
-        .spotlight-item:hover {
-            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
-        }
-        .spotlight-header {
-            border-bottom: 2px solid #667eea;
-            padding-bottom: 15px;
-            margin-bottom: 20px;
-        }
-        .spotlight-title {
-            font-size: 24px;
-            font-weight: 600;
-            color: #2c3e50;
-            margin: 0 0 8px 0;
-        }
-        .spotlight-meta {
-            font-size: 14px;
-            color: #7f8c8d;
-            margin: 5px 0;
-        }
-        .spotlight-meta strong {
-            color: #34495e;
-        }
-        .category-badge {
-            display: inline-block;
-            background-color: #667eea;
-            color: #ffffff;
-            padding: 4px 12px;
-            border-radius: 12px;
-            font-size: 12px;
-            font-weight: 600;
-            margin-right: 5px;
-        }
-        .tag {
-            display: inline-block;
-            background-color: #e8eaf6;
-            color: #5c6bc0;
-            padding: 3px 10px;
-            border-radius: 10px;
-            font-size: 11px;
-            margin-right: 5px;
-            margin-top: 5px;
-        }
-        .section {
-            margin: 20px 0;
-        }
-        .section-title {
-            font-size: 16px;
-            font-weight: 600;
-            color: #34495e;
-            margin: 0 0 10px 0;
+
+        .card-header {
+            background: linear-gradient(135deg, #BE2BBB 0%, #9a1f99 100%);
+            color: white;
+            padding: 25px 30px;
             display: flex;
+            justify-content: space-between;
             align-items: center;
         }
+
+        .card-header-left {
+            flex: 1;
+        }
+
+        .card-header h2 {
+            font-size: 1.5rem;
+            margin-bottom: 5px;
+        }
+
+        .card-header .subtitle {
+            opacity: 0.9;
+            font-size: 0.95rem;
+        }
+
+        .category-tag {
+            background: rgba(255, 255, 255, 0.2);
+            border: 2px solid white;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            text-align: center;
+            white-space: nowrap;
+            backdrop-filter: blur(5px);
+        }
+
+        .card-body {
+            padding: 30px;
+        }
+
+        .section {
+            margin-bottom: 25px;
+        }
+
+        .section:last-child {
+            margin-bottom: 0;
+        }
+
+        .section-title {
+            color: #BE2BBB;
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
         .section-title::before {
             content: '';
-            display: inline-block;
             width: 4px;
-            height: 16px;
-            background-color: #667eea;
-            margin-right: 8px;
+            height: 20px;
+            background: #BE2BBB;
+            border-radius: 2px;
         }
+
         .section-content {
-            color: #555555;
+            color: #444;
             line-height: 1.7;
         }
+
+        .impact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .impact-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .card-header {
+                flex-direction: column;
+                gap: 15px;
+                align-items: flex-start;
+            }
+
+            .category-tag {
+                align-self: flex-end;
+            }
+        }
+
+        .contributors-list {
+            color: #444;
+            line-height: 1.7;
+        }
+
+        .team-tag {
+            background: #BE2BBB;
+            color: white;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            display: inline-block;
+            margin: 3px;
+        }
+
         .footer {
-            background-color: #2c3e50;
-            color: #ecf0f1;
-            padding: 30px;
             text-align: center;
-            font-size: 14px;
+            margin-top: 50px;
+            padding: 20px;
+            color: #888;
         }
-        .footer a {
-            color: #3498db;
-            text-decoration: none;
-        }
-        .divider {
-            border: 0;
-            height: 1px;
-            background: linear-gradient(to right, transparent, #ccc, transparent);
-            margin: 30px 0;
-        }
-        /* Outlook specific fixes */
-        table {
-            border-collapse: collapse;
+
+        .footer .brand {
+            color: #BE2BBB;
+            font-weight: bold;
         }
     </style>
 </head>
 <body>
-    <table width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color: #f4f4f4;">
-        <tr>
-            <td align="center" style="padding: 20px 0;">
-                <table class="container" width="800" cellpadding="0" cellspacing="0" border="0">
-                    <!-- Header -->
-                    <tr>
-                        <td class="header">
-                            <h1>✨ Organizational Spotlight</h1>
-                            <p>{{ publication_name }}</p>
-                        </td>
-                    </tr>
+    <div class="container">
+        <div class="header">
+            <h1>Bristol Myers Squibb</h1>
+            <p style="font-size: 1.5rem; color: #BE2BBB; margin-bottom: 5px;">Organizational Spotlight</p>
+            <p>{{ publication_name }}</p>
+        </div>
 
-                    <!-- Content -->
-                    <tr>
-                        <td class="content">
-                            <!-- Introduction -->
-                            <div class="intro">
-                                <p style="margin: 0;">
-                                    Welcome to this edition of Organizational Spotlight!
-                                    We're excited to showcase the amazing work and achievements from our teams.
-                                    Let's celebrate these accomplishments together!
-                                </p>
-                            </div>
+        {% for submission in submissions %}
+        <div class="spotlight-card">
+            <div class="card-header">
+                <div class="card-header-left">
+                    <h2>{{ submission.title }}</h2>
+                    <div class="subtitle">{{ submission.project_name }}</div>
+                </div>
+                {% if submission.category %}
+                <div class="category-tag">{{ submission.category }}</div>
+                {% endif %}
+            </div>
+            <div class="card-body">
+                {% if submission.description %}
+                <div class="section">
+                    <div class="section-title">Overview</div>
+                    <div class="section-content">{{ submission.description }}</div>
+                </div>
+                {% endif %}
 
-                            <!-- Spotlight Items -->
-                            {% for submission in submissions %}
-                            <div class="spotlight-item">
-                                <!-- Spotlight Header -->
-                                <div class="spotlight-header">
-                                    <h2 class="spotlight-title">{{ submission.title }}</h2>
-                                    <div class="spotlight-meta">
-                                        <strong>Project:</strong> {{ submission.project_name }}
-                                        {% if submission.category %}
-                                        <span class="category-badge">{{ submission.category }}</span>
-                                        {% endif %}
-                                    </div>
-                                    {% if submission.team_members %}
-                                    <div class="spotlight-meta">
-                                        <strong>Team:</strong> {{ submission.team_members }}
-                                    </div>
-                                    {% endif %}
-                                </div>
+                {% if submission.key_achievements %}
+                <div class="section">
+                    <div class="section-title">Key Achievements</div>
+                    <div class="section-content">{{ submission.key_achievements }}</div>
+                </div>
+                {% endif %}
 
-                                <!-- Description -->
-                                {% if submission.description %}
-                                <div class="section">
-                                    <div class="section-title">Overview</div>
-                                    <div class="section-content">{{ submission.description }}</div>
-                                </div>
-                                {% endif %}
+                {% if submission.impact %}
+                <div class="section">
+                    <div class="section-title">Impact & Results</div>
+                    <div class="section-content">{{ submission.impact }}</div>
+                </div>
+                {% endif %}
 
-                                <!-- Key Achievements -->
-                                {% if submission.key_achievements %}
-                                <div class="section">
-                                    <div class="section-title">Key Achievements</div>
-                                    <div class="section-content">{{ submission.key_achievements }}</div>
-                                </div>
-                                {% endif %}
+                {% if submission.team_members %}
+                <div class="section">
+                    <div class="section-title">Team Contributors</div>
+                    <div class="contributors-list">
+                        {{ submission.team_members }}
+                    </div>
+                </div>
+                {% endif %}
 
-                                <!-- Impact & Results -->
-                                {% if submission.impact %}
-                                <div class="section">
-                                    <div class="section-title">Impact & Results</div>
-                                    <div class="section-content">{{ submission.impact }}</div>
-                                </div>
-                                {% endif %}
-
-                                <!-- Tags -->
-                                {% if submission.tags %}
-                                <div style="margin-top: 15px;">
-                                    {% if submission.tags is string %}
-                                        {% for tag in submission.tags.split(',') %}
-                                        <span class="tag">{{ tag.strip() }}</span>
-                                        {% endfor %}
-                                    {% else %}
-                                        {% for tag in submission.tags %}
-                                        <span class="tag">{{ tag }}</span>
-                                        {% endfor %}
-                                    {% endif %}
-                                </div>
-                                {% endif %}
-                            </div>
-
-                            {% if not loop.last %}
-                            <hr class="divider">
-                            {% endif %}
+                {% if submission.tags %}
+                <div class="section">
+                    <div class="section-title">Tags</div>
+                    <div>
+                        {% if submission.tags is string %}
+                            {% for tag in submission.tags.split(',') %}
+                            <span class="team-tag">{{ tag.strip() }}</span>
                             {% endfor %}
+                        {% else %}
+                            {% for tag in submission.tags %}
+                            <span class="team-tag">{{ tag }}</span>
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+        {% endfor %}
 
-                            <!-- Closing Message -->
-                            <div class="intro" style="margin-top: 30px;">
-                                <p style="margin: 0;">
-                                    <strong>Thank you to all contributors!</strong><br>
-                                    These achievements represent the hard work and dedication of our teams.
-                                    Keep up the excellent work!
-                                </p>
-                            </div>
-                        </td>
-                    </tr>
-
-                    <!-- Footer -->
-                    <tr>
-                        <td class="footer">
-                            <p style="margin: 0 0 10px 0;">
-                                <strong>Organizational Spotlight</strong>
-                            </p>
-                            <p style="margin: 0; font-size: 12px; opacity: 0.8;">
-                                This is an automated message from the Organizational Spotlight system.<br>
-                                If you have questions or suggestions, please contact your communications team.
-                            </p>
-                        </td>
-                    </tr>
-                </table>
-            </td>
-        </tr>
-    </table>
+        <div class="footer">
+            <p><span class="brand">Bristol Myers Squibb</span> | Organizational Spotlight</p>
+            <p style="margin-top: 10px; font-size: 0.9rem;">Celebrating achievements and innovations across our organization</p>
+        </div>
+    </div>
 </body>
 </html>

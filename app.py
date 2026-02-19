@@ -22,6 +22,7 @@ from database.init_db import initialize_database
 # Import UI components
 from ui.user_dashboard import show_user_dashboard
 from ui.approver_dashboard import show_approver_dashboard
+from ui.bms_styles import load_custom_css, render_bms_header, render_bms_sidebar_header
 
 
 def main():
@@ -29,6 +30,9 @@ def main():
 
     # Configure page
     st.set_page_config(**settings.PAGE_CONFIG)
+
+    # Load custom CSS and BMS branding
+    load_custom_css()
 
     # Initialize session state
     init_session_state()
@@ -45,17 +49,16 @@ def main():
     # Initialize authenticator
     auth = SimpleAuthenticator()
 
-    # Show title
-    st.title(f"✨ {settings.APP_NAME}")
+    # Show BMS branded header
+    render_bms_header(settings.APP_NAME, "Managing bi-monthly organizational achievements")
 
     # Authentication
     if not auth.is_authenticated():
         # Show login form
-        st.markdown("---")
         st.markdown("### Please Login")
 
         # Show help text before login form
-        with st.expander("ℹ️ Default Login Credentials (Demo)"):
+        with st.expander("Default Login Credentials (Demo)"):
             st.markdown("""
             **User Account:**
             - Username: `user1`
@@ -71,7 +74,7 @@ def main():
         name, authentication_status, username = auth.login()
 
         if authentication_status is False:
-            st.error("❌ Username/password is incorrect")
+            st.error("Username/password is incorrect")
 
         return
 
@@ -85,15 +88,15 @@ def main():
     # Update last login time
     db_manager.update_user_last_login(current_user['email'])
 
-    # Show user info in sidebar
-    st.sidebar.markdown("---")
-    st.sidebar.markdown(f"### 👤 {current_user['name']}")
-    st.sidebar.markdown(f"**Role:** {current_user['role'].title()}")
-    st.sidebar.markdown(f"**Email:** {current_user['email']}")
-    st.sidebar.markdown("---")
+    # Show user info in sidebar with BMS styling
+    render_bms_sidebar_header(
+        current_user['name'],
+        current_user['role'],
+        current_user['email']
+    )
 
     # Logout button
-    if st.sidebar.button("🚪 Logout", type="primary"):
+    if st.sidebar.button("Logout", type="primary"):
         auth.logout()
         st.rerun()
 
@@ -116,9 +119,11 @@ def main():
     # Footer
     st.sidebar.markdown("---")
     st.sidebar.markdown(
-        f"<div style='text-align: center; color: #666; font-size: 12px;'>"
-        f"{settings.APP_NAME}<br>v1.0.0"
-        f"</div>",
+        "<div style='text-align: center; color: #7F8C8D; font-size: 11px;'>"
+        "Bristol Myers Squibb<br>"
+        "Organizational Spotlight<br>"
+        "v1.0.0"
+        "</div>",
         unsafe_allow_html=True
     )
 

@@ -111,19 +111,9 @@ FORM_FIELDS = [
     }
 ]
 
-# Project names configuration (can be a dropdown or free text)
-PROJECT_NAMES = [
-    'Project Alpha',
-    'Project Beta',
-    'Project Gamma',
-    'Digital Transformation Initiative',
-    'Cloud Migration',
-    'Customer Portal',
-    'Data Platform',
-    'Security Enhancement',
-    'Process Automation',
-    'Other'
-]
+# Project names configuration
+# Set to None to use manual text input only
+PROJECT_NAMES = None  # Manual population only
 
 # Email recipients configuration
 # Can be a list of email addresses or groups
@@ -156,8 +146,8 @@ Return your response in JSON format with these exact keys: "title", "description
 
 # Streamlit page configuration
 PAGE_CONFIG = {
-    'page_title': APP_NAME,
-    'page_icon': '✨',
+    'page_title': 'BMS - ' + APP_NAME,
+    'page_icon': 'assets/bms.png',
     'layout': 'wide',
     'initial_sidebar_state': 'expanded'
 }

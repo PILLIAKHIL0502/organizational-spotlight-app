@@ -1,0 +1,21 @@
+Bristol Myers Squibb Logo Instructions
+========================================
+
+Please place your BMS logo file (bms.png) in this directory (assets/).
+
+The logo will be displayed:
+- In the application header
+- As the page favicon
+
+Recommended specifications:
+- Format: PNG with transparent background
+- Size: 200-400 pixels width
+- Color: Can be full color or white/transparent for header use
+
+File name should be exactly: bms.png
+
+If you have custom fonts, place them in the assets/fonts/ directory:
+- BMSRegular.ttf (or .otf, .woff, .woff2)
+- BMSBold.ttf (or .otf, .woff, .woff2)
+
+The application will automatically use them if they're present in the correct directory.

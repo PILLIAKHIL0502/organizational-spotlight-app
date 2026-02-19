@@ -36,15 +36,15 @@ def show_approver_dashboard(db_manager: DatabaseManager, user_email: str, user_n
     st.sidebar.markdown("### Navigation")
     page = st.sidebar.radio(
         "Choose a page",
-        ["📥 Review Queue", "📚 All Publications", "🚀 Publish"],
+        ["Review Queue", "All Publications", "Publish"],
         label_visibility="collapsed"
     )
 
-    if page == "📥 Review Queue":
+    if page == "Review Queue":
         show_review_queue_page(db_manager, pub_service, user_email)
-    elif page == "📚 All Publications":
+    elif page == "All Publications":
         show_all_publications_page(db_manager, pub_service)
-    elif page == "🚀 Publish":
+    elif page == "Publish":
         show_publish_page(db_manager, pub_service, user_email)
 
 
@@ -61,8 +61,7 @@ def show_review_queue_page(db_manager: DatabaseManager,
     """
     render_page_header(
         "Review Queue",
-        "Review submitted spotlights and approve for publication",
-        "📥"
+        "Review submitted spotlights and approve for publication"
     )
 
     # Get all publications with submitted items
@@ -105,7 +104,7 @@ def show_review_queue_page(db_manager: DatabaseManager,
         fields = db_manager.get_submission_fields(submission.id)
 
         with st.expander(
-            f"📄 Submission #{submission.id}: {fields.get('title', 'Untitled')}",
+            f"Submission #{submission.id}: {fields.get('title', 'Untitled')}",
             expanded=(idx == 0)
         ):
             show_submission_review(
@@ -150,7 +149,7 @@ def show_submission_review(db_manager: DatabaseManager,
     st.markdown("---")
 
     # Edit option
-    if st.checkbox(f"✏️ Edit Submission", key=f"edit_check_{submission.id}"):
+    if st.checkbox(f"Edit Submission", key=f"edit_check_{submission.id}"):
         st.markdown("### Edit Submission")
 
         # Allow editing
@@ -160,7 +159,7 @@ def show_submission_review(db_manager: DatabaseManager,
         col1, col2 = st.columns([1, 3])
 
         with col1:
-            if st.button("🤖 Get AI Suggestions", key=f"ai_{submission.id}"):
+            if st.button("Get AI Suggestions", key=f"ai_{submission.id}"):
                 ai_service = get_ai_service()
 
                 submission_data = {
@@ -183,7 +182,7 @@ def show_submission_review(db_manager: DatabaseManager,
 
             render_ai_comparison(original, st.session_state[f'ai_suggestions_{submission.id}'])
 
-            if st.button("✅ Accept AI Suggestions", key=f"accept_ai_{submission.id}"):
+            if st.button("Accept AI Suggestions", key=f"accept_ai_{submission.id}", type="primary"):
                 for key, value in st.session_state[f'ai_suggestions_{submission.id}'].items():
                     if key in edited_fields:
                         edited_fields[key] = value
@@ -191,7 +190,7 @@ def show_submission_review(db_manager: DatabaseManager,
                 render_success_message("Suggestions accepted!")
 
         # Save edited fields
-        if st.button("💾 Save Changes", key=f"save_{submission.id}"):
+        if st.button("Save Changes", key=f"save_{submission.id}"):
             try:
                 db_manager.update_submission_fields(submission.id, edited_fields)
                 render_success_message("Changes saved successfully!")
@@ -200,7 +199,7 @@ def show_submission_review(db_manager: DatabaseManager,
                 render_error_message(f"Failed to save changes: {str(e)}")
 
     # Preview
-    if st.button("👁️ Preview", key=f"preview_{submission.id}"):
+    if st.button("Preview", key=f"preview_{submission.id}"):
         st.session_state[f'show_preview_{submission.id}'] = True
 
     if st.session_state.get(f'show_preview_{submission.id}', False):
@@ -217,14 +216,14 @@ def show_submission_review(db_manager: DatabaseManager,
 
     with col1:
         approve_button = st.button(
-            "✅ Approve",
+            "Approve",
             key=f"approve_{submission.id}",
             type="primary"
         )
 
     with col2:
         reject_button = st.button(
-            "❌ Reject",
+            "Reject",
             key=f"reject_{submission.id}"
         )
 
@@ -271,8 +270,7 @@ def show_all_publications_page(db_manager: DatabaseManager,
     """
     render_page_header(
         "All Publications",
-        "View and manage all publication cycles",
-        "📚"
+        "View and manage all publication cycles"
     )
 
     # Year filter
@@ -329,8 +327,7 @@ def show_publish_page(db_manager: DatabaseManager,
     """
     render_page_header(
         "Publish Spotlights",
-        "Review and send approved spotlights via email",
-        "🚀"
+        "Review and send approved spotlights via email"
     )
 
     # Get publications with approved submissions
@@ -378,7 +375,7 @@ def show_publish_page(db_manager: DatabaseManager,
             **fields
         })
 
-        with st.expander(f"📄 {fields.get('title', 'Untitled')} - {submission.project_name}"):
+        with st.expander(f"{fields.get('title', 'Untitled')} - {submission.project_name}"):
             for field_name, field_value in fields.items():
                 if field_value:
                     st.markdown(f"**{field_name.replace('_', ' ').title()}:**")
@@ -398,7 +395,7 @@ def show_publish_page(db_manager: DatabaseManager,
     recipients = [email.strip() for email in recipients_input.split(',') if email.strip()]
 
     # Preview email
-    if st.button("👁️ Preview Email"):
+    if st.button("Preview Email"):
         st.markdown("### Email Preview")
 
         email_service = get_email_service()
@@ -420,7 +417,7 @@ def show_publish_page(db_manager: DatabaseManager,
     st.markdown("### Publish and Send")
 
     st.warning(
-        f"⚠️ This will:\n"
+        f"This will:\n"
         f"1. Mark the publication as 'published'\n"
         f"2. Send email to {len(recipients)} recipient(s)\n"
         f"3. Lock the publication (no more edits)"
@@ -429,17 +426,17 @@ def show_publish_page(db_manager: DatabaseManager,
     col1, col2, col3 = st.columns([1, 1, 3])
 
     with col1:
-        if st.button("🚀 Publish & Send", type="primary"):
+        if st.button("Publish & Send", type="primary"):
             st.session_state['confirm_publish'] = True
 
     with col2:
-        if st.button("❌ Cancel"):
+        if st.button("Cancel"):
             st.session_state['confirm_publish'] = False
 
     if st.session_state.get('confirm_publish', False):
         st.markdown("### Confirm Publication")
 
-        if st.button("✅ Yes, Publish Now", type="primary"):
+        if st.button("Yes, Publish Now", type="primary"):
             email_service = get_email_service()
 
             with render_loading_spinner("Publishing and sending email..."):
@@ -458,7 +455,7 @@ def show_publish_page(db_manager: DatabaseManager,
                         st.session_state['confirm_publish'] = False
 
                         render_success_message(
-                            f"✅ Publication '{selected_pub.get_display_name()}' "
+                            f"Publication '{selected_pub.get_display_name()}' "
                             f"published successfully and email sent to {len(recipients)} recipient(s)!"
                         )
 

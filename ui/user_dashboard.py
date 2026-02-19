@@ -39,13 +39,13 @@ def show_user_dashboard(db_manager: DatabaseManager, user_email: str, user_name:
     st.sidebar.markdown("### Navigation")
     page = st.sidebar.radio(
         "Choose a page",
-        ["✏️ New Submission", "📋 My Submissions"],
+        ["New Submission", "My Submissions"],
         label_visibility="collapsed"
     )
 
-    if page == "✏️ New Submission":
+    if page == "New Submission":
         show_new_submission_page(db_manager, pub_service, ai_service, user_email, user_name)
-    elif page == "📋 My Submissions":
+    elif page == "My Submissions":
         show_my_submissions_page(db_manager, user_email)
 
 
@@ -66,8 +66,7 @@ def show_new_submission_page(db_manager: DatabaseManager,
     """
     render_page_header(
         "Submit Organizational Spotlight",
-        "Share your team's achievements and make them shine! ✨",
-        "📝"
+        "Share your team's achievements and make them shine"
     )
 
     # Get active publication
@@ -80,7 +79,7 @@ def show_new_submission_page(db_manager: DatabaseManager,
         return
 
     # Show active publication info
-    st.info(f"📅 Submitting for: **{active_pub.get_display_name()}**")
+    st.info(f"Submitting for: **{active_pub.get_display_name()}**")
 
     # Initialize session state for form
     if 'form_data' not in st.session_state:
@@ -121,7 +120,7 @@ def show_new_submission_page(db_manager: DatabaseManager,
     col1, col2 = st.columns([1, 3])
 
     with col1:
-        if st.button("🤖 Get AI Suggestions", type="primary"):
+        if st.button("Get AI Suggestions", type="primary"):
             # Validate form first
             is_valid, errors = validate_form_submission(form_data, settings.FORM_FIELDS)
 
@@ -160,7 +159,7 @@ def show_new_submission_page(db_manager: DatabaseManager,
         col1, col2, col3 = st.columns([1, 1, 3])
 
         with col1:
-            if st.button("✅ Accept Suggestions"):
+            if st.button("Accept Suggestions", type="primary"):
                 # Update form data with suggestions
                 for key, value in st.session_state.ai_suggestions.items():
                     if key in st.session_state.form_data:
@@ -170,7 +169,7 @@ def show_new_submission_page(db_manager: DatabaseManager,
                 st.rerun()
 
         with col2:
-            if st.button("❌ Reject Suggestions"):
+            if st.button("Reject Suggestions"):
                 st.session_state.ai_suggestions = None
                 render_info_message("Suggestions rejected. Using your original content.")
                 st.rerun()
@@ -180,7 +179,7 @@ def show_new_submission_page(db_manager: DatabaseManager,
     # Step 4: Preview
     st.markdown("## Step 4: Preview Your Submission")
 
-    if st.button("👁️ Preview", type="secondary"):
+    if st.button("Preview", type="secondary"):
         st.session_state.show_preview = True
 
     if st.session_state.show_preview:
@@ -198,10 +197,10 @@ def show_new_submission_page(db_manager: DatabaseManager,
     col1, col2, col3 = st.columns([1, 1, 3])
 
     with col1:
-        submit_button = st.button("🚀 Submit", type="primary")
+        submit_button = st.button("Submit", type="primary")
 
     with col2:
-        save_draft_button = st.button("💾 Save as Draft")
+        save_draft_button = st.button("Save as Draft")
 
     if submit_button or save_draft_button:
         # Validate form
@@ -277,8 +276,7 @@ def show_my_submissions_page(db_manager: DatabaseManager, user_email: str):
     """
     render_page_header(
         "My Submissions",
-        "View and manage your spotlight submissions",
-        "📋"
+        "View and manage your spotlight submissions"
     )
 
     # Get user's submissions
@@ -328,7 +326,7 @@ def show_my_submissions_page(db_manager: DatabaseManager, user_email: str):
         publication = db_manager.get_publication(submission.publication_id)
 
         with st.expander(
-            f"📄 {fields.get('title', 'Untitled')} - {submission.project_name}",
+            f"{fields.get('title', 'Untitled')} - {submission.project_name}",
             expanded=False
         ):
             col1, col2 = st.columns([2, 1])
@@ -357,9 +355,9 @@ def show_my_submissions_page(db_manager: DatabaseManager, user_email: str):
                 col1, col2 = st.columns([1, 4])
 
                 with col1:
-                    if st.button("✏️ Edit", key=f"edit_{submission.id}"):
+                    if st.button("Edit", key=f"edit_{submission.id}"):
                         st.info("Edit functionality will be implemented in the next version.")
 
                 with col2:
-                    if st.button("🗑️ Delete", key=f"delete_{submission.id}"):
+                    if st.button("Delete", key=f"delete_{submission.id}"):
                         st.warning("Delete functionality will be implemented in the next version.")
