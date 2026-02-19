@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Preview - Organizational Spotlight</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333333;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 20px;
+        }
+        .preview-container {
+            max-width: 700px;
+            margin: 0 auto;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        .preview-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #ffffff;
+            padding: 30px;
+            text-align: center;
+        }
+        .preview-header h1 {
+            margin: 0 0 10px 0;
+            font-size: 28px;
+            font-weight: 600;
+        }
+        .preview-content {
+            padding: 30px;
+        }
+        .spotlight-title {
+            font-size: 24px;
+            font-weight: 600;
+            color: #2c3e50;
+            margin: 0 0 15px 0;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #667eea;
+        }
+        .meta-info {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 20px;
+            padding: 15px;
+            background-color: #f8f9fa;
+            border-radius: 6px;
+        }
+        .meta-item {
+            font-size: 14px;
+            color: #555;
+        }
+        .meta-item strong {
+            color: #333;
+        }
+        .category-badge {
+            display: inline-block;
+            background-color: #667eea;
+            color: #ffffff;
+            padding: 5px 15px;
+            border-radius: 15px;
+            font-size: 13px;
+            font-weight: 600;
+        }
+        .tag {
+            display: inline-block;
+            background-color: #e8eaf6;
+            color: #5c6bc0;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            margin-right: 6px;
+            margin-top: 6px;
+        }
+        .section {
+            margin: 25px 0;
+        }
+        .section-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #34495e;
+            margin: 0 0 12px 0;
+            display: flex;
+            align-items: center;
+        }
+        .section-title::before {
+            content: '';
+            display: inline-block;
+            width: 4px;
+            height: 18px;
+            background-color: #667eea;
+            margin-right: 10px;
+        }
+        .section-content {
+            color: #555555;
+            line-height: 1.8;
+            white-space: pre-wrap;
+        }
+        .tags-section {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid #e0e0e0;
+        }
+    </style>
+</head>
+<body>
+    <div class="preview-container">
+        <div class="preview-header">
+            <h1>Preview Your Spotlight</h1>
+            <p style="margin: 0; opacity: 0.95;">This is how your submission will appear in the publication</p>
+        </div>
+
+        <div class="preview-content">
+            <h2 class="spotlight-title">{{ title }}</h2>
+
+            <div class="meta-info">
+                <div class="meta-item">
+                    <strong>Project:</strong> {{ project_name }}
+                </div>
+                {% if category %}
+                <div class="meta-item">
+                    <span class="category-badge">{{ category }}</span>
+                </div>
+                {% endif %}
+                {% if team_members %}
+                <div class="meta-item" style="flex-basis: 100%;">
+                    <strong>Team:</strong> {{ team_members }}
+                </div>
+                {% endif %}
+            </div>
+
+            {% if description %}
+            <div class="section">
+                <div class="section-title">Overview</div>
+                <div class="section-content">{{ description }}</div>
+            </div>
+            {% endif %}
+
+            {% if key_achievements %}
+            <div class="section">
+                <div class="section-title">Key Achievements</div>
+                <div class="section-content">{{ key_achievements }}</div>
+            </div>
+            {% endif %}
+
+            {% if impact %}
+            <div class="section">
+                <div class="section-title">Impact & Results</div>
+                <div class="section-content">{{ impact }}</div>
+            </div>
+            {% endif %}
+
+            {% if tags %}
+            <div class="tags-section">
+                {% if tags is string %}
+                    {% for tag in tags.split(',') %}
+                    <span class="tag">{{ tag.strip() }}</span>
+                    {% endfor %}
+                {% else %}
+                    {% for tag in tags %}
+                    <span class="tag">{{ tag }}</span>
+                    {% endfor %}
+                {% endif %}
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html>

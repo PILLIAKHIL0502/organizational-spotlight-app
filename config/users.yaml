@@ -1,0 +1,25 @@
+# User credentials configuration
+# In production, use OAuth/SSO instead of hardcoded credentials
+
+credentials:
+  usernames:
+    user1:
+      email: user1@organization.com
+      name: John Doe
+      password: $2b$12$EixZaYVK1fsbw1ZfbX3OXePaWxn96p36WQoeG6Lruj3vjPGga31lW  # hashed: password123
+      role: user
+    user2:
+      email: user2@organization.com
+      name: Jane Smith
+      password: $2b$12$EixZaYVK1fsbw1ZfbX3OXePaWxn96p36WQoeG6Lruj3vjPGga31lW  # hashed: password123
+      role: user
+    approver1:
+      email: approver1@organization.com
+      name: Admin User
+      password: $2b$12$EixZaYVK1fsbw1ZfbX3OXePaWxn96p36WQoeG6Lruj3vjPGga31lW  # hashed: password123
+      role: approver
+
+cookie:
+  expiry_days: 30
+  key: organizational_spotlight_auth  # Change in production
+  name: spotlight_auth_cookie
