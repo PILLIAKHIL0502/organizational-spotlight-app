@@ -12,7 +12,8 @@ from pathlib import Path
 from config import settings
 
 # Import authentication
-from auth.authenticator import Authenticator, init_session_state, get_user_display_name
+from auth.simple_auth import SimpleAuthenticator
+from auth.authenticator import init_session_state, get_user_display_name
 
 # Import database
 from database.db_manager import DatabaseManager
@@ -42,7 +43,7 @@ def main():
     db_manager = DatabaseManager(settings.DATABASE_PATH)
 
     # Initialize authenticator
-    auth = Authenticator()
+    auth = SimpleAuthenticator()
 
     # Show title
     st.title(f"✨ {settings.APP_NAME}")
@@ -53,26 +54,24 @@ def main():
         st.markdown("---")
         st.markdown("### Please Login")
 
-        name, authentication_status, username = auth.login('main')
+        # Show help text before login form
+        with st.expander("ℹ️ Default Login Credentials (Demo)"):
+            st.markdown("""
+            **User Account:**
+            - Username: `user1`
+            - Password: `password123`
+
+            **Approver Account:**
+            - Username: `approver1`
+            - Password: `password123`
+
+            **Note:** In production, these should be replaced with SSO/OAuth authentication.
+            """)
+
+        name, authentication_status, username = auth.login()
 
         if authentication_status is False:
-            st.error("Username/password is incorrect")
-        elif authentication_status is None:
-            st.info("Please enter your username and password")
-
-            # Show help text
-            with st.expander("ℹ️ Default Login Credentials (Demo)"):
-                st.markdown("""
-                **User Account:**
-                - Username: `user1`
-                - Password: `password123`
-
-                **Approver Account:**
-                - Username: `approver1`
-                - Password: `password123`
-
-                **Note:** In production, these should be replaced with SSO/OAuth authentication.
-                """)
+            st.error("❌ Username/password is incorrect")
 
         return
 

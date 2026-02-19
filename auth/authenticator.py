@@ -60,9 +60,16 @@ class Authenticator:
             st.error("Authenticator not properly configured")
             return None, None, None
 
-        name, authentication_status, username = self.authenticator.login(
-            location=location
-        )
+        try:
+            # Try new API first (streamlit-authenticator >= 0.3.0)
+            name, authentication_status, username = self.authenticator.login(fields={'Form name': 'Login'})
+        except TypeError:
+            try:
+                # Try older API with location parameter
+                name, authentication_status, username = self.authenticator.login(location=location)
+            except:
+                # Fallback to simplest call
+                name, authentication_status, username = self.authenticator.login()
 
         # Store user info in session state
         if authentication_status:
@@ -71,6 +78,11 @@ class Authenticator:
             st.session_state['user_name'] = name
             st.session_state['user_role'] = user_data.get('role', 'user')
             st.session_state['username'] = username
+            st.session_state['authentication_status'] = True
+        elif authentication_status is False:
+            st.session_state['authentication_status'] = False
+        else:
+            st.session_state['authentication_status'] = None
 
         return name, authentication_status, username
 
@@ -82,7 +94,22 @@ class Authenticator:
             location: Where to display the logout button ('main' or 'sidebar')
         """
         if self.authenticator:
-            self.authenticator.logout(location=location)
+            try:
+                # Try new API
+                self.authenticator.logout()
+            except TypeError:
+                try:
+                    # Try with location parameter
+                    self.authenticator.logout(location=location)
+                except:
+                    pass
+
+        # Clear session state
+        st.session_state['authentication_status'] = None
+        st.session_state['user_email'] = None
+        st.session_state['user_name'] = None
+        st.session_state['user_role'] = None
+        st.session_state['username'] = None
 
     def get_current_user(self) -> Optional[Dict[str, Any]]:
         """
