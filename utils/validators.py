@@ -152,19 +152,24 @@ def sanitize_html_content(content: str) -> str:
     return content
 
 
-def validate_project_name(project_name: str, available_projects: List[str]) -> Tuple[bool, str]:
+def validate_project_name(project_name: str, available_projects: List[str] = None) -> Tuple[bool, str]:
     """
     Validate project name.
 
     Args:
         project_name: Project name to validate
-        available_projects: List of valid project names
+        available_projects: List of valid project names (None for manual entry only)
 
     Returns:
         Tuple of (is_valid, error_message)
     """
     if not project_name or not project_name.strip():
         return False, "Project name is required"
+
+    # If no project list (manual entry mode), just validate length
+    if available_projects is None:
+        is_valid, error = validate_text_length(project_name, "Project name", 1, 100)
+        return is_valid, error
 
     # Allow "Other" or custom project names
     if project_name == "Other" or project_name not in available_projects:
