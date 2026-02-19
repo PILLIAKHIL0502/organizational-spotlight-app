@@ -247,11 +247,15 @@ class DatabaseManager:
 
             # Create submission fields
             for field_name, field_value in fields.items():
+                # Convert lists to comma-separated strings for SQLite storage
+                if isinstance(field_value, list):
+                    field_value = ', '.join(str(item) for item in field_value)
+
                 cursor.execute('''
                     INSERT INTO submission_fields
                     (submission_id, field_name, field_value, created_at)
                     VALUES (?, ?, ?, ?)
-                ''', (submission_id, field_name, field_value, now))
+                ''', (submission_id, field_name, str(field_value), now))
 
             return Submission(
                 id=submission_id,
@@ -405,11 +409,15 @@ class DatabaseManager:
 
             # Insert updated fields
             for field_name, field_value in fields.items():
+                # Convert lists to comma-separated strings for SQLite storage
+                if isinstance(field_value, list):
+                    field_value = ', '.join(str(item) for item in field_value)
+
                 cursor.execute('''
                     INSERT INTO submission_fields
                     (submission_id, field_name, field_value, created_at)
                     VALUES (?, ?, ?, ?)
-                ''', (submission_id, field_name, field_value, now))
+                ''', (submission_id, field_name, str(field_value), now))
 
             # Update submission updated_at
             cursor.execute('''
