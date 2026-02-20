@@ -197,12 +197,12 @@ def render_submission_card(submission, fields: Dict[str, str], show_actions: boo
         fields: Dictionary of submission fields
         show_actions: Whether to show action buttons
     """
-    with st.expander(f"📄 {fields.get('title', 'Untitled')} - {submission.project_name}"):
+    with st.expander(f"{fields.get('title', 'Untitled')} - {submission.project_name}"):
         col1, col2 = st.columns([3, 1])
 
         with col1:
             st.markdown(f"**Submitted by:** {submission.user_email}")
-            st.markdown(f"**Status:** ", end='')
+            st.markdown(f"**Status:**")
             render_status_badge(submission.status)
 
         with col2:

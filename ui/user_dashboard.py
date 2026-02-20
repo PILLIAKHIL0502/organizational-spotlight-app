@@ -333,7 +333,7 @@ def show_my_submissions_page(db_manager: DatabaseManager, user_email: str):
 
             with col1:
                 st.markdown(f"**Publication:** {publication.get_display_name()}")
-                st.markdown(f"**Status:** ", end='')
+                st.markdown(f"**Status:**")
                 render_status_badge(submission.status)
 
             with col2:
